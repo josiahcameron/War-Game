@@ -1,6 +1,6 @@
 import { Card, cardSuits, cardValues } from "./card.js";
 
-function Deck(){
+export function Deck(){
     this.cards = [];
 }
 
@@ -26,23 +26,12 @@ Deck.prototype.shuffle = function(){
     }
 }
 
-let handOne = [];
-let handTwo = [];
-Deck.prototype.deal = function (){
-    deck.shuffle();
-    for (let i = 0; i < this.cards.length; i++){
-        if (i % 2 == 0){
-        handOne.push(deck.cards[i])
-        } else if (i % 2 == 1){
-            handTwo.push(deck.cards[i])
-        }
-    }
-}
 
-const deck = new Deck()
+
+export const deck = new Deck()
+console.log(deck.cards)
 deck.createDeck()
 deck.shuffle()
-deck.deal()
-console.log(handOne, handTwo)
-//console.log(deck.cards)
+//console.log(handOne, handTwo)
+
 // console.log(cardSuits, cardValues)

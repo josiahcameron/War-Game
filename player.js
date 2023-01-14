@@ -1,5 +1,7 @@
-function Player(name){
-    this.player1 = name1;
-    this.player2 = name2;
-    this.hand = hand
+export function Player({name, hand}={}){
+    this.name = name;
+    this.hand = [];
 }
+
+
+
