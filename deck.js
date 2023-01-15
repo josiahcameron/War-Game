@@ -12,6 +12,9 @@ Deck.prototype.createDeck = function () {
             const value = cardValues[i];
             const card = new Card({suit,value})
             this.cards.push(card)
+            const test = 'K'
+            const testing = ['2', '3', 'K']
+            console.log(testing.indexOf(test))
             // console.log(suit, value)
         }
     }
@@ -29,7 +32,7 @@ Deck.prototype.shuffle = function(){
 
 
 export const deck = new Deck()
-console.log(deck.cards)
+// console.log(deck.cards)
 deck.createDeck()
 deck.shuffle()
 //console.log(handOne, handTwo)

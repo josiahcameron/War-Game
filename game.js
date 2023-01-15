@@ -1,3 +1,4 @@
+import { cardValues } from "./card.js";
 import { Deck, deck } from "./deck.js";
 import { Player } from "./player.js";
 
@@ -28,12 +29,29 @@ Deck.prototype.deal = function (){
     }
 }
 
-function cardCompare(card){
-    for(i = 1; i < playerOne.hand.length; i++)
-}
-
 deck.deal()
-console.log(playerTwo.hand[0])
+
+while (playerOne.hand.length <= 0 || playerTwo.hand.length <= 0){
+function cardCompare(){
+        const playerOneCardValue = cardValues.indexOf(playerOne.hand[0].value);
+        const playerTwoCardValue = cardValues.indexOf(playerTwo.hand[0].value);
+    
+        if (playerOneCardValue > playerTwoCardValue){
+            playerOne.hand.push(playerTwo.hand[0]);
+            playerTwo.hand.shift;
+        } else if (playerTwoCardValue > playerOneCardValue){
+            playerTwo.hand.push(playerOne.hand[0])
+            playerOne.hand.shift;
+        }
+        console.log(playerOne.hand)
+        console.log(playerTwo.hand)
+    }
+ }
+ console.log(playerOne.hand)
+ console.log(playerTwo.hand)
+
+
+// while loop ( cardCompared())
 // function Game(){
     
 // }
