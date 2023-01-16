@@ -31,61 +31,82 @@ Deck.prototype.deal = function (){
 
 deck.deal()
 
-while (playerOne.hand.length < 52 && playerTwo.hand.length < 52){
+console.log(playerOne.hand)
+
+
+while (playerOne.hand.length > 0 && playerTwo.hand.length > 0){
     //These variables are single-object arrays of the first card on each loop. They also mutate each hand array.
+    //This uses the index of the cardValue array in the card.js module to determine the value of each card
     let playerOneCurrentCard = playerOne.hand.splice(0,1);
     let playerTwoCurrentCard = playerTwo.hand.splice(0,1);
-    //This uses the index of the cardValue array in the card.js module to determine the value of each card
-    let playerOneCardValue = cardValues.indexOf(playerOneCurrentCard.value);
-    let playerTwoCardValue = cardValues.indexOf(playerTwoCurrentCard.value);
-    
+    //Needed to specify I was using an index of 0 for my current card values
+    let playerOneCardValue = cardValues.indexOf(playerOneCurrentCard[0].value);
+    let playerTwoCardValue = cardValues.indexOf(playerTwoCurrentCard[0].value);
     //Compare the value property of each card object
     //Will use spread to get the object of the spliced arrays rather than the arrays themselves.
     //Really proud of you for getting this far, me :)
     if (playerOneCardValue > playerTwoCardValue){
+        console.log(playerOneCardValue + ' vs ' + playerTwoCardValue)
         playerOne.hand.push(...playerOneCurrentCard, ...playerTwoCurrentCard)
+        console.log("P1 Wins This Hand")
+        console.log(`Cards remaining:\nP1 - ${playerOne.hand.length}\nP2 - ${playerTwo.hand.length}\n\n`)
+
     }
     else if (playerTwoCardValue > playerOneCardValue){
+        console.log(playerOneCardValue + ' vs ' + playerTwoCardValue)
         playerTwo.hand.push(...playerTwoCurrentCard, ...playerOneCurrentCard)
+        console.log("P2 Wins This Hand")
+        console.log(`Cards remaining:\nP1 - ${playerOne.hand.length}\nP2 - ${playerTwo.hand.length}\n\n`)
+
     }
     //THIS IS WAR!!!!!!!
     //Make war card deck with splice and then compare the values of the last card pulled
     //"Eventually" I'll need to be able to display the value and suit properties of the last card 
     else if (playerOneCardValue === playerTwoCardValue && playerOne.hand.length > 5 && playerTwo.hand.length > 5) {
+        console.log(playerOneCardValue + ' vs ' + playerTwoCardValue)
+        console.log("\n\n--->WAR<---\n\n")
         while (playerOneCardValue === playerTwoCardValue){
-            let playerOneWarCards = playerOne.hand.splice(0,4);
-            console.log(playerOneWarCards[3])
-            let playerTwoWarCards = playerTwo.hand.splice(0,4);
-            console.log(playerTwoWarCards[3])
+            const playerOneWarCards = playerOne.hand.splice(0,4);
+            const playerTwoWarCards = playerTwo.hand.splice(0,4);
             let playerOneWarCardValue = cardValues.indexOf(playerOneWarCards[3].value);
             let playerTwoWarCardValue = cardValues.indexOf(playerTwoWarCards[3].value);
-            
-            if (playerOneWarCardValue > playerTwoWarCardValue && playerOne.hand.length > 5 && playerTwo.hand.length > 5){
-                playerOne.hand.push(...playerOneWarCards, ...playerTwoWarCards)
+            console.log(playerOneWarCardValue + ' vs ' + playerTwoWarCardValue)
+            if (playerOneWarCardValue > playerTwoWarCardValue){
+                playerOne.hand.push(...playerOneWarCards, ...playerTwoWarCards, ...playerOneCurrentCard, ...playerTwoCurrentCard)
                 console.log("P1 Wins This War")
+                console.log(`Cards remaining:\nP1 - ${playerOne.hand.length}\nP2 - ${playerTwo.hand.length}\n\n`)
             }
-            else if (playerTwoWarCardValue > playerOneWarCardValue && playerOne.hand.length > 5 && playerTwo.hand.length > 5){
-                playerTwo.hand.push(...playerTwoWarCards, ...playerOneWarCards)
+            else if (playerTwoWarCardValue > playerOneWarCardValue){
+                playerTwo.hand.push(...playerTwoWarCards, ...playerOneWarCards, ...playerOneCurrentCard, ...playerTwoCurrentCard)
                 console.log("P2 Wins This War")
+                console.log(`Cards remaining:\nP1 - ${playerOne.hand.length}\nP2 - ${playerTwo.hand.length}\n\n`)
                 }
-                else {
-                    console.log('Not enough cards')
-                }
+            else if (playerOneWarCardValue === playerTwoWarCardValue){ 
+                playerOneWarCards.push(...playerOneCurrentCard, ...playerTwoCurrentCard)
+                playerTwoWarCards.push(...playerOneCurrentCard, ...playerTwoCurrentCard)
+                console.log(playerOneWarCardValue + ' !vs! ' + playerTwoWarCardValue)
+                console.log("\n\n\nLet's go again\n\n\n")
             }
+            else {
+                console.log(`Error: P1 Length: ${playerOne.hand.length}\nP1 War Value: ${playerOneWarCardValue}\n\nP2 Length: ${playerTwo.hand.length}\nP2 War Value: ${playerTwoWarCardValue} `)
+            break    
+            }
+            break
+            }
+        
         } 
-    else {
-        console.log('Not Enough Cards')
+        //break added because of a random infinite looping glitch
+        else {
+            console.log(`Cards remaining:\nP1 - ${playerOne.hand.length}\nP2 - ${playerTwo.hand.length}\n\n`)
+            console.log('Not Enough Cards')
+        break
     }
 }
 
-if (playerOne.hand.length >= 52){
-    console.log('P1 Wins!')
-} else if (playerTwo.hand.length >= 52){
-    console.log('P2 Wins!')
-} else {
-    console.log('Something wring')
-}
 
+
+playerOne.hand.length > playerTwo.hand.length ? console.log("P1 Wins") : console.log("P2 Wins");
+console.log(`Cards remaining:\nP1 - ${playerOne.hand.length}\nP2 - ${playerTwo.hand.length}\n\n`)
  
 //You want this while loop to run until one of the arrays equals zero.
 //Each loop compares the hands

@@ -14,7 +14,6 @@ Deck.prototype.createDeck = function () {
             this.cards.push(card)
             const test = 'K'
             const testing = ['2', '3', 'K']
-            console.log(testing.indexOf(test))
             // console.log(suit, value)
         }
     }
