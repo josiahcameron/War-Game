@@ -34,7 +34,7 @@ deck.deal()
 console.log(playerOne.hand)
 
 
-while (playerOne.hand.length > 0 && playerTwo.hand.length > 0){
+while (playerOne.hand.length > 0 && playerTwo.hand.length > 0) {
     //These variables are single-object arrays of the first card on each loop. They also mutate each hand array.
     //This uses the index of the cardValue array in the card.js module to determine the value of each card
     let playerOneCurrentCard = playerOne.hand.splice(0,1);
@@ -65,7 +65,8 @@ while (playerOne.hand.length > 0 && playerTwo.hand.length > 0){
     else if (playerOneCardValue === playerTwoCardValue && playerOne.hand.length > 5 && playerTwo.hand.length > 5) {
         console.log(playerOneCardValue + ' vs ' + playerTwoCardValue)
         console.log("\n\n--->WAR<---\n\n")
-        while (playerOneCardValue === playerTwoCardValue){
+        //Does this need to be a Do ... While??
+        do {
             const playerOneWarCards = playerOne.hand.splice(0,4);
             const playerTwoWarCards = playerTwo.hand.splice(0,4);
             let playerOneWarCardValue = cardValues.indexOf(playerOneWarCards[3].value);
@@ -92,7 +93,7 @@ while (playerOne.hand.length > 0 && playerTwo.hand.length > 0){
             break    
             }
             break
-            }
+            } while (playerOneCardValue === playerTwoCardValue);
         
         } 
         //break added because of a random infinite looping glitch
@@ -101,7 +102,7 @@ while (playerOne.hand.length > 0 && playerTwo.hand.length > 0){
             console.log('Not Enough Cards')
         break
     }
-}
+} 
 
 
 
