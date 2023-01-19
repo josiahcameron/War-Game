@@ -1,11 +1,46 @@
-import { cardValues } from "./card.js";
-import { Deck, deck } from "./deck.js";
+import { cardSuits, cardValues, Card } from "./card.js";
+import { Deck } from "./deck.js";
 import { Player } from "./player.js";
 
 //Instances of players and decks made here
 //Use prompt() function for players names
+const $drawButton = document.querySelector(".draw");
+const $playerOneCard = document.querySelector(".playerone-card");
+const $playerTwoCard = document.querySelector(".playertwo-card");
+let potCount = [];
+let playerOneCard = [];
+let playerTwoCard = [];
+
+Deck.prototype.createDeck = function () {
+    for (let i = 0; i < cardSuits.length; i++) {
+        const suit = cardSuits[i];
+        
+        for (let i = 0; i < cardValues.length; i++) {
+            const value = cardValues[i];
+            const card = new Card({suit,value})
+            this.cards.push(card)
+        }
+    }
+}
+
+Deck.prototype.shuffle = function(){
+    deck.createDeck()
+    for (let i = this.cards.length - 1; i > 0; i--){
+        let j = Math.floor(Math.random() * i);
+        let randomDeckPosition = this.cards[i];
+        deck.cards[i] = deck.cards[j];
+        deck.cards[j] = randomDeckPosition;
+    }
+}
 
 
+
+const deck = new Deck()
+
+function Game(){
+
+
+}
 let playerOne = new Player({
     // name: prompt("Player 1 Name:")
     hand: []
@@ -16,10 +51,15 @@ let playerTwo = new Player({
     hand: []
 })
 
+let pot = new Player({
+    hand: []
+})
+
 //.deal method
 //Loops through shuffled deck array and uses modulo to turn i into
 //a 1 or 0 each loop
 Deck.prototype.deal = function (){
+    deck.shuffle()
     for (let i = 0; i < deck.cards.length; i++){
         if (i % 2 == 0){
         playerOne.hand.push(deck.cards[i])
@@ -31,117 +71,44 @@ Deck.prototype.deal = function (){
 
 deck.deal()
 
-console.log(playerOne.hand)
 
-
-while (playerOne.hand.length > 0 && playerTwo.hand.length > 0) {
-    //These variables are single-object arrays of the first card on each loop. They also mutate each hand array.
-    //This uses the index of the cardValue array in the card.js module to determine the value of each card
-    let playerOneCurrentCard = playerOne.hand.splice(0,1);
-    let playerTwoCurrentCard = playerTwo.hand.splice(0,1);
-    //Needed to specify I was using an index of 0 for my current card values
-    let playerOneCardValue = cardValues.indexOf(playerOneCurrentCard[0].value);
-    let playerTwoCardValue = cardValues.indexOf(playerTwoCurrentCard[0].value);
-    //Compare the value property of each card object
-    //Will use spread to get the object of the spliced arrays rather than the arrays themselves.
-    //Really proud of you for getting this far, me :)
-    if (playerOneCardValue > playerTwoCardValue){
-        console.log(playerOneCardValue + ' vs ' + playerTwoCardValue)
-        playerOne.hand.push(...playerOneCurrentCard, ...playerTwoCurrentCard)
-        console.log("P1 Wins This Hand")
+Deck.prototype.compare = function(){
+    if(playerOne.hand.length < 3 && playerTwo.hand.length < 3){
+        playerOne.hand.length > playerTwo.hand.length ? console.log("P1 Wins") : console.log("P2 Wins");
         console.log(`Cards remaining:\nP1 - ${playerOne.hand.length}\nP2 - ${playerTwo.hand.length}\n\n`)
-
     }
-    else if (playerTwoCardValue > playerOneCardValue){
-        console.log(playerOneCardValue + ' vs ' + playerTwoCardValue)
-        playerTwo.hand.push(...playerTwoCurrentCard, ...playerOneCurrentCard)
-        console.log("P2 Wins This Hand")
-        console.log(`Cards remaining:\nP1 - ${playerOne.hand.length}\nP2 - ${playerTwo.hand.length}\n\n`)
-
-    }
-    //THIS IS WAR!!!!!!!
-    //Make war card deck with splice and then compare the values of the last card pulled
-    //"Eventually" I'll need to be able to display the value and suit properties of the last card 
-    else if (playerOneCardValue === playerTwoCardValue && playerOne.hand.length > 5 && playerTwo.hand.length > 5) {
-        console.log(playerOneCardValue + ' vs ' + playerTwoCardValue)
-        console.log("\n\n--->WAR<---\n\n")
-        //Does this need to be a Do ... While??
-        do {
-            const playerOneWarCards = playerOne.hand.splice(0,4);
-            const playerTwoWarCards = playerTwo.hand.splice(0,4);
-            let playerOneWarCardValue = cardValues.indexOf(playerOneWarCards[3].value);
-            let playerTwoWarCardValue = cardValues.indexOf(playerTwoWarCards[3].value);
-            console.log(playerOneWarCardValue + ' vs ' + playerTwoWarCardValue)
-            if (playerOneWarCardValue > playerTwoWarCardValue){
-                playerOne.hand.push(...playerOneWarCards, ...playerTwoWarCards, ...playerOneCurrentCard, ...playerTwoCurrentCard)
-                console.log("P1 Wins This War")
-                console.log(`Cards remaining:\nP1 - ${playerOne.hand.length}\nP2 - ${playerTwo.hand.length}\n\n`)
-            }
-            else if (playerTwoWarCardValue > playerOneWarCardValue){
-                playerTwo.hand.push(...playerTwoWarCards, ...playerOneWarCards, ...playerOneCurrentCard, ...playerTwoCurrentCard)
-                console.log("P2 Wins This War")
-                console.log(`Cards remaining:\nP1 - ${playerOne.hand.length}\nP2 - ${playerTwo.hand.length}\n\n`)
-                }
-            else if (playerOneWarCardValue === playerTwoWarCardValue){ 
-                playerOneWarCards.push(...playerOneCurrentCard, ...playerTwoCurrentCard)
-                playerTwoWarCards.push(...playerOneCurrentCard, ...playerTwoCurrentCard)
-                console.log(playerOneWarCardValue + ' !vs! ' + playerTwoWarCardValue)
-                console.log("\n\n\nLet's go again\n\n\n")
-            }
-            else {
-                console.log(`Error: P1 Length: ${playerOne.hand.length}\nP1 War Value: ${playerOneWarCardValue}\n\nP2 Length: ${playerTwo.hand.length}\nP2 War Value: ${playerTwoWarCardValue} `)
-            break    
-            }
-            break
-            } while (playerOneCardValue === playerTwoCardValue);
-        
-        } 
-        //break added because of a random infinite looping glitch
-        else {
+    else {
+        if (cardValues.indexOf(pot.hand[0].value) === cardValues.indexOf(pot.hand[1].value)){
+            pot.hand = [...playerOne.hand.splice(0,3), ...playerTwo.hand.splice(0,3), ...pot.hand]
+            console.log("This is War")
+        }
+        else if (cardValues.indexOf(pot.hand[0].value) > cardValues.indexOf(pot.hand[1].value)){
+            console.log(cardValues.indexOf(pot.hand[0].value) + ' vs ' + cardValues.indexOf(pot.hand[1].value))
+            playerOne.hand.push(...pot.hand)
+            pot.hand = []
+            console.log("P1 Wins This Hand")
             console.log(`Cards remaining:\nP1 - ${playerOne.hand.length}\nP2 - ${playerTwo.hand.length}\n\n`)
-            console.log('Not Enough Cards')
-        break
+        } else if (cardValues.indexOf(pot.hand[0].value) < cardValues.indexOf(pot.hand[1].value)){
+            playerTwo.hand.push(...pot.hand)
+            pot.hand = []
+        }
     }
-} 
+}
+// Deck.prototype.war = function(){
 
-
-
-playerOne.hand.length > playerTwo.hand.length ? console.log("P1 Wins") : console.log("P2 Wins");
-console.log(`Cards remaining:\nP1 - ${playerOne.hand.length}\nP2 - ${playerTwo.hand.length}\n\n`)
- 
-//You want this while loop to run until one of the arrays equals zero.
-//Each loop compares the hands
-//Each winning hand needs to move the first value to the back
-//splice() and push() can be used.
-//I won't need a for loop because I'll be changing the hand array each loop
-//splice(0,1) will take the card at the start of each array for comparison
-//push([0]) will take that card and push the spliced array values to the back of the winner's array
-//Before trying to do both at once, splice the cards first and set them to a new variable to compare
-//Push the value of that newly-made array to the end of the winning hand, the losing hand's array will already have their card spliced out
-
-//"Next steps" when the spliced values are tied, run the while loop again
-//This time, the splice will remove the two cards after the current ones(i.e. splice(1, 2)) for each
-
-
-//         if (playerOneCardValue > playerTwoCardValue){
-//             playerOne.hand.push(playerTwo.hand[0]);
-//             playerTwo.hand.shift;
-//         } else if (playerTwoCardValue > playerOneCardValue){
-//             playerTwo.hand.push(playerOne.hand[0])
-//             playerOne.hand.shift;
-//         }
-//         console.log(playerOne.hand)
-//         console.log(playerTwo.hand)
-//     }
-//  }
-//  console.log(playerOne.hand)
-//  console.log(playerTwo.hand)
-
-
-// while loop ( cardCompared())
-// function Game(){
-    
 // }
+Deck.prototype.play = function(){
+    pot.hand = [...playerOne.hand.splice(0,1), ...playerTwo.hand.splice(0,1)]
+    playerOneCard = [...pot.hand[0].suit, ...pot.hand[0].value];
+    playerTwoCard = [...pot.hand[1].suit, ...pot.hand[1].value];
+    
+    document.getElementById("playerOne-card").innerHTML = playerOneCard.join();
+    document.getElementById("playerTwo-card").innerHTML = playerTwoCard.join();
+    $playerTwoCard.value = pot.hand[1];
+    deck.compare()
+}
 
-// const game = new Game();
-// console.log('testing')
+$drawButton.addEventListener('click', deck.play())
+
+
+
