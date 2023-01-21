@@ -11,26 +11,30 @@
   <h1>WAR!!</h1>
 </header>
 <body>
-<section class='player-one'>
+<!-- Player One -->
+<section class='playerOneBlock'>
   <h2>Player 1</h2>
-  <input type="text" class="player-name" value="Player 1" disabled/>
-  <div class="playerone-info">
-    <input type="text" class="player-one-points" value="0" disabled/>
-    <input type="text" class="player-one-card-count" value="26" disabled/>
+  <input type="text" class="playerName" value="Player 1"/>
+  <div class="playerOneInfo">
+    <div type="text" class="cardCount" id="playerOneCardCount">26</div>
     <!-- <input type="text" class="player-name" value="Player 1" disabled/> -->
   </div>
-  <div class="player-card playerone-card" id="playerOne-card"></div>
+  <div class="playerCard playerOneCard" id="playerOneCard"></div>
 </section>
+<!-- Middle -->
+<section class="middleBlock">
 <button type="button" class="draw" value="draw">Draw</button>
-<section class='player-two'>
+<div class="currentValues"></div>
+</section>
+<!-- Player Two -->
+<section class='playerTwo'>
   <h2>Player 2</h2>
-  <input type="text" class="player-name" value="Player 2" disabled/>
-  <div class="playertwo-info">
-    <input type="text" class="player-two-points" value="0" disabled/>
-    <input type="text" class="player-two-card-count" value="26" disabled/>
+  <input type="text" class="playerName" value="Player 2" disabled/>
+  <div class="playerTwoInfo">
+    <div type="text" class="cardCount" id="playerTwoCardCount">26</div>
     <!-- <input type="text" class="player-name" value="Player 1" disabled/> -->
   </div>
-  <div class="player-card playertwo-card" id="playerTwo-card">test</div>
+  <div class="playerCard playerTwoCard" id="playerTwoCard"></div>
 </section>
 
   <script src="game.js" type="module"></script>
