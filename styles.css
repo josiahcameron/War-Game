@@ -1,96 +1,97 @@
-*, *::after, *::before { 
+/* *, *::after, *::before { 
   box-sizing: border-box;
-  background-color: ;
+} */
+* {
+  box-sizing: border-box;
 }
 
 h1{
-  display: block;
   text-align: center;
-  justify-self: center;
-  width: 100%;
 }
 
 body {
   font-family: Verdana, Arial, Helvetica, sans-serif;
-  width: 100%;
-  height: 100%;
-  display: inline-block;
   position: relative;
   border: black 2px solid;
 }
 
+.sectionStyler {
+  font-size: 0;
+  text-align: center;
+}
+
 section{
   display: inline-block;
-  width: 39%;
+  width: 33%;
   position: relative;
-  left: 0; 
-  right: 0; 
-  margin-left: auto; 
-  margin-right: auto; 
   border: 1px solid red;
-}
-
-div {
-  display: inline-block;
-}
-
-button {
-  display: inline-block;
-  height: 40px;
-  border: 1px solid #5E5C5C;
+  height: 150px;
+  vertical-align: top;
   font-size: 15px;
-  color: #fff;
-  background-color: #848281;
-  width: 20%;
+}
+
+button{
   position: absolute;
-  left: 25%;
-  right: 25%
+  top: 20%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  height: 25%;
 }
 
-.currentValues{
-  display: block;
+
+.middleBlock {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.playerHandAmount{
   position: absolute;
-  height: 40px;
-  width: 20%;
-  border: #fff 2px solid;
-  right: 50%;
-  left: 39%;
-  background-color: #5E5C5C;
-}
-
-.playerOne{
-  float: left;
-  left: 0; 
-  right: 0; 
-  margin-left: auto; 
-  margin-right: 15px; 
-}
-
-.playerTwo{
-  float: right;
-  left: 0; 
-  right: 0; 
-  margin-left: auto; 
-  margin-right: 15px; 
+  border: 2px black solid;
+  width: 25%;
+  left: 0;
+  right: 0;
+  bottom: 10%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .playerCard{
-  height: 250px;
-  width: 225px;
-  border: black solid 1px;
-  display: block;
   position: absolute;
-  left: 0; 
-  right: 0; 
-  margin-left: auto; 
+  top: 110%;
+  border: 2px black solid;
+  left: 0;
+  right: 0;
+  bottom: 10%;
+  margin-left: auto;
   margin-right: auto;
-  font-size: large;
-  color: blue 
+  width: 2.5in;
+  height: 3.5in;
+  border-radius: 15px;
 }
 
-.cardCount{
-  width: 121px;
-  height: 20px;
-  border: 1px solid black;
-  color: black;
+.middleDisplay{
+  position: absolute;
+  border: solid black 2px;
+  left: 0;
+  right: 0;
+  bottom: 25%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+  font-size: 16px;
+  overflow-wrap: break-word;
+}
+
+.playerName{
+  position: absolute;
+  border: 2px black solid;
+  width: 25%;
+  left: 0;
+  right: 0;
+  bottom: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }

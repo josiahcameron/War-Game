@@ -48,39 +48,46 @@ Game.prototype.deal = function (){
 }
 
 Game.prototype.compare = function(){
-    if(this.playerOne.hand.length < 3 && this.playerTwo.hand.length < 3){
+    if(this.playerOne.hand.length < 3 || this.playerTwo.hand.length < 3){
         this.playerOne.hand.length > this.playerTwo.hand.length ? console.log("P1 Wins") : console.log("P2 Wins");
-        console.log(`Cards remaining:\nP1 - ${this.playerOne.hand.length}\nP2 - ${this.playerTwo.hand.length}\n\n`)
+        document.getElementById("middleDisplay").innerHTML = `Cards remaining:\nP1 - ${this.playerOne.hand.length}\nP2 - ${this.playerTwo.hand.length}\n\n`;
     }
     else {
         if (cardValues.indexOf(this.pot[0].value) === cardValues.indexOf(this.pot[1].value)){
             console.log(this.playerOne.hand)
             game.pot = [...this.playerOne.hand.splice(0,3), ...this.playerTwo.hand.splice(0,3), ...this.pot]
-            console.log("This is War")
+            document.getElementById("middleDisplay").innerHTML = "This is War";
             console.log(this.playerOne.hand)
         }
         else if (cardValues.indexOf(this.pot[0].value) > cardValues.indexOf(this.pot[1].value)){
-            // console.log(cardValues.indexOf(this.pot[0].value) + ' vs ' + cardValues.indexOf(this.pot[1].value))
+            document.getElementById("middleDisplay").innerHTML = cardValues.indexOf(this.pot[0].value) + ' vs ' + cardValues.indexOf(this.pot[1].value);
             this.playerOne.hand.push(...this.pot)
             this.pot = []
-            // console.log("P1 Wins This Hand")
-            // console.log(`Cards remaining:\nP1 - ${this.playerOne.hand.length}\nP2 - ${this.playerTwo.hand.length}\n\n`)
+            document.getElementById("middleDisplay").innerHTML = "P1 Wins This Hand"
         } else if (cardValues.indexOf(this.pot[0].value) < cardValues.indexOf(this.pot[1].value)){
+            document.getElementById("middleDisplay").innerHTML = cardValues.indexOf(this.pot[0].value) + ' vs ' + cardValues.indexOf(this.pot[1].value);
             this.playerTwo.hand.push(...this.pot)
             this.pot = []
+            document.getElementById("middleDisplay").innerHTML = "P2 Wins This Hand"
         }
     }
 }
-// Deck.prototype.war = function(){
 
-// }
 Game.prototype.draw = function(){
     if(this.playerOne.hand.length < 3 || this.playerTwo.hand.length < 3){
-        this.playerOne.hand.length > this.playerTwo.hand.length ? console.log("P1 Wins") : console.log("P2 Wins");
-        console.log(`Cards remaining:\nP1 - ${this.playerOne.hand.length}\nP2 - ${this.playerTwo.hand.length}\n\n`)
+        this.playerOne.hand.length > this.playerTwo.hand.length ? 
+        document.getElementById("middleDisplay").innerHTML =
+        `P1 Wins!
+        Cards remaining:
+        P1 - ${this.playerOne.hand.length}
+        P2 - ${this.playerTwo.hand.length}` : 
+        document.getElementById("middleDisplay").innerHTML =
+        `P2 Wins!
+        Cards remaining:
+        P1 - ${this.playerOne.hand.length}
+        P2 - ${this.playerTwo.hand.length}`;
     } else{
     this.pot = [...this.playerOne.hand.splice(0,1), ...this.playerTwo.hand.splice(0,1), ...this.pot]
-    // console.log(this.pot)
     this.playerOneCard = [...this.pot[0].suit, this.pot[0].value];
     this.playerTwoCard = [...this.pot[1].suit, this.pot[1].value];
     
@@ -98,6 +105,8 @@ Game.prototype.draw = function(){
 Game.prototype.play = function(){
     game.shuffle(game.deck);
     game.deal();
+    document.getElementById("playerOneName").innerHTML = prompt("Player 1:")
+    document.getElementById("playerTwoName").innerHTML = prompt("Player 2:")
 }()
 
 $drawButton.addEventListener('click', function(){game.draw()});

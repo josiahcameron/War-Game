@@ -11,32 +11,35 @@
   <h1>WAR!!</h1>
 </header>
 <body>
+<div class="sectionStyler">
 <!-- Player One -->
 <section class='playerOneBlock'>
   <h2>Player 1</h2>
-  <input type="text" class="playerName" value="Player 1"/>
+  <div id="playerOneName" class="playerName">Player 1</div>
   <div class="playerOneInfo">
-    <div type="text" class="cardCount" id="playerOneCardCount">26</div>
+    <div type="text" class="playerHandAmount" id="playerOneCardCount">26</div>
     <!-- <input type="text" class="player-name" value="Player 1" disabled/> -->
   </div>
   <div class="playerCard playerOneCard" id="playerOneCard"></div>
 </section>
+
 <!-- Middle -->
 <section class="middleBlock">
 <button type="button" class="draw" value="draw">Draw</button>
-<div class="currentValues"></div>
+<div class="middleDisplay" id="middleDisplay">Click "Draw" To Start</div>
 </section>
+
 <!-- Player Two -->
 <section class='playerTwo'>
   <h2>Player 2</h2>
-  <input type="text" class="playerName" value="Player 2" disabled/>
+  <div id="playerTwoName" class="playerName">Player 2</div>
   <div class="playerTwoInfo">
-    <div type="text" class="cardCount" id="playerTwoCardCount">26</div>
+    <div type="text" class="playerHandAmount" id="playerTwoCardCount">26</div>
     <!-- <input type="text" class="player-name" value="Player 1" disabled/> -->
   </div>
   <div class="playerCard playerTwoCard" id="playerTwoCard"></div>
 </section>
-
+</div>
   <script src="game.js" type="module"></script>
 </body>
 </html>
